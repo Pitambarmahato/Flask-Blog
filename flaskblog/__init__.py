@@ -4,11 +4,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = 'ad1c409a05615a548657b90ae138d677'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
+
+admin = Admin(app)
+
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'users.login' #redirects the page to the login page if someone try to access the account page
@@ -24,6 +30,7 @@ from flaskblog.users.routes import users
 from flaskblog.posts.routes import posts
 from flaskblog.main.routes import main
 from flaskblog.errors.handlers import errors
+from flaskblog.books.routes import books
 
 
 
@@ -31,3 +38,4 @@ app.register_blueprint(users)
 app.register_blueprint(posts)
 app.register_blueprint(main)
 app.register_blueprint(errors)
+app.register_blueprint(books)
